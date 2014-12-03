@@ -1,20 +1,23 @@
+(* api.ml -- Kubernetes interface for OCaml *)
+open Http_client.Convenience
 
-type id = string
-type metadata = (string, string) Hashtbl.t 
+module Api(param : sig val server_url : string end) = 
+struct 
+  module Pod = struct
+     let resource_base "/pods"
+     let resource = resource_base ^ "/"
+     let nextId = let x = ref 0 in fun () -> x := !x + 1; (string_of_int x);;
 
-type port = { containerPort: int; hostPort: int }
-type container = { name: string; image: string; ports: port list }
+     let get_all () = 
+        http_get (server_url ^ resource_base)
+ 
+     let get id = 
+        http_get (server_url ^ resource ^ id)
+ 
+     let make url pod =
+        http_put (server_url ^ resource ^ nextId()) (Kubernetes_types_j.string_of_pod pod)
+  end
+end
 
-type manifest = { id: string; containers: container list }
 
-type desiredState = { manifest: manifest }
-
-type pod = { kind: string; id: string; desiredState: desiredState }
-
-type resourceTy = 
-    | Pod of pod
-    | ReplicationController 
-    | Service 
-
-type resource = Resource of id * metadata * resourceTy
 
