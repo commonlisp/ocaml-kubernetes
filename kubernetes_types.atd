@@ -1,5 +1,5 @@
 type id = string
-type metadata = (string, string) list
+type metadata = (string * string) list
 
 type port = { containerPort: int; hostPort: int }
 type container = { name: string; image: string; ports: port list }
@@ -11,8 +11,8 @@ type desiredState = { manifest: manifest }
 type pod = { kind: string; id: string; desiredState: desiredState }
 
 type resourceTy = 
-    | Pod of Pod.t
+    [ Pod of pod
     | ReplicationController 
-    | Service 
+    | Service ]
 
-type resource = Resource of id * metadata * resourceTy
+type resource = [ Resource of (id * metadata * resourceTy) ]
