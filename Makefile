@@ -16,6 +16,6 @@ REQUIRES = netclient atdgen
 
 all: $(OBJECTS)
 
-.PHONY: clean
-	rm -f *.{cmi,cmo,cmx,cma,cmxa,a}
+clean:
+	rm -f *.{cmi,cmo,cmx,cma,cmxa,a} kubernetes_types.{ml,mli}
 
