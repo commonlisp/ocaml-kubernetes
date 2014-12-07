@@ -10,6 +10,12 @@ type desiredState = { manifest: manifest }
 
 type pod = { kind: string; id: string; desiredState: desiredState }
 
+type replicaSelector = { name : id }
+type replicationState = { replicas : int; 
+     replicaSelector : replicaSelector; 
+     podTemplate : manifest }
+
+type replicationController = { desiredState: replicationState }
 type resourceTy = 
     [ Pod of pod
     | ReplicationController 
