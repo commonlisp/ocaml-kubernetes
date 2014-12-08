@@ -10,12 +10,15 @@ type desiredState = { manifest: manifest }
 
 type pod = { kind: string; id: string; desiredState: desiredState }
 
-type replicaSelector = { name : id }
+type selector = { name : id }
 type replicationState = { replicas : int; 
-     replicaSelector : replicaSelector; 
+     replicaSelector : selector; 
      podTemplate : manifest }
 
 type replicationController = { desiredState: replicationState }
+
+type service = { kind : string; id : id; port: int; labels : selector; selector: selector }
+
 type resourceTy = 
     [ Pod of pod
     | ReplicationController 
