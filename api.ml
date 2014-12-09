@@ -19,16 +19,18 @@ struct
        let pod_url = Param.server_url ^ resource
 
        let get_all () = 
-          http_get (Param.server_url ^ X.resource_base)
+           http_get (Param.server_url ^ X.resource_base)
  
        let get id = 
-          Kubernetes_types.pod_of_string (http_get (pod_url ^ id))
+           let url = pod_url ^ id
+           in Kubernetes_types.pod_of_string (http_get url)
  
        let make pod =
-          http_put (pod_url ^ nextId()) (Kubernetes_types.string_of_pod pod)
+           let url = pod_url ^ nextId()
+           in http_put url (Kubernetes_types.string_of_pod pod)
 
        let delete id = 
-          http_delete (pod_url ^ id)
+           http_delete (pod_url ^ id)
      end
 
   module Pod = MkResource(struct 
