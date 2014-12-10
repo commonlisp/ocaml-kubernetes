@@ -5,13 +5,11 @@ REQUIRES = netclient atdgen
 
 .SUFFIXES: .cmo .cmi .cmx .ml .mli .atd
 
-.atd.mli: 
+%.mli: %.atd
 	atdgen $<
-.ml.cmo:
+%.cmo %.cmx: %.ml
 	$(OCAMLC) -package "$(REQUIRES)" -I . -c $<
-.mli.cmi:
-	$(OCAMLC) -package "$(REQUIRES)" -I . -c $<
-.ml.cmx:
+%.cmi: %.mli
 	$(OCAMLC) -package "$(REQUIRES)" -I . -c $<
 
 all: $(OBJECTS)
