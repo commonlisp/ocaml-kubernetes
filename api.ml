@@ -33,27 +33,28 @@ struct
            http_delete (pod_url ^ id)
      end
 
-  module Pod = MkResource(struct 
-                 type t = Kubernetes_types.pod 
+  module Pod = 
+    MkResource(struct 
+         type t = Kubernetes_types.pod 
 		 let resource_base = "pods/" 
 		 let string_of_resource = Kubernetes_types.string_of_pod ~len:defaultLen
 		 let resource_of_string = Kubernetes_types.pod_of_string ~pos:defaultPos
-	       end)
+	  end)
 
   module ReplicationController = 
     MkResource(struct
-	         type t = Kubernetes_types.replicationController
+	     type t = Kubernetes_types.replicationController
 		 let resource_base = "replicationControllers/"
 		 let string_of_resource = Kubernetes_types.string_of_replicationController ~len:defaultLen
 		 let resource_of_string = Kubernetes_types.replicationController_of_string ~pos:defaultPos
-		end)
+	  end)
 
   module Service = 
     MkResource(struct
-	         type t = Kubernetes_types.service
+	     type t = Kubernetes_types.service
 		 let resource_base = "services/"
 		 let string_of_resource = Kubernetes_types.string_of_service ~len:defaultLen
 		 let resource_of_string = Kubernetes_types.service_of_string ~pos:defaultPos
-	       end)
+	  end)
 end
 
