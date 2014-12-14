@@ -2,13 +2,52 @@ type id = string
 type metadata = (string * string) list
 
 type port = { containerPort: int; hostPort: int }
-type container = { name: string; image: string; ports: port list }
 
-type manifest = { id: string; containers: container list }
+type path = {
+	path: string;
+	port: string;
+}
 
+type livenessProbe = {
+	enabled: bool;
+	ty: string <json name="type">;
+	initialDelaySeconds: int;
+	httpGet: path;
+}
+
+type container = {
+	name: string; 
+	image: string; 
+	ports: port list;
+	?livenessProbe: livenessProbe option
+	}
+
+type manifest = { 
+	version: string;
+	id: string; 
+	containers: container list 
+	}
+
+type property = [
+	Manifest of manifest <json name="manifest">
+	| Status <json name="status">
+	| Host <json name="host">
+	| HostIP <json name="hostIP">
+	| Info <json name="info">
+	]
 type desiredState = { manifest: manifest }
 
-type pod = { kind: string; id: string; desiredState: desiredState }
+type currentState = { 
+	properties: property list	
+}
+
+type pod = { 
+	kind: string; 
+	apiVersion: string;
+	id: string; 
+	desiredState: desiredState;
+	?currentState: currentState option;
+	}
 
 type selector = { name : id }
 type replicationState = { replicas : int; 
