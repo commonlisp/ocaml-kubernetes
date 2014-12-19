@@ -50,11 +50,20 @@ type pod = {
 	}
 
 type selector = { name : id }
-type replicationState = { replicas : int; 
+type replicationState = { 
+     replicas : int; 
      replicaSelector : selector; 
-     podTemplate : manifest }
+     podTemplate : manifest 
+}
 
-type replicationController = { desiredState: replicationState }
+type replicationController = { 
+     id: string; 
+     apiVersion: string;
+     kind: string; (* "ReplicationController" *)
+     creationTimestamp: string;
+     selfLink: string;
+     desiredState: replicationState 
+}
 
 type service = { kind : string; id : id; port: int; labels : selector; selector: selector }
 
