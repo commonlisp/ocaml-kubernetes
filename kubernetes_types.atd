@@ -65,7 +65,17 @@ type replicationController = {
      desiredState: replicationState 
 }
 
-type service = { kind : string; id : id; port: int; labels : selector; selector: selector }
+type service = { 
+     kind : string; 
+     id : id; 
+     creationTimestamp: string;
+     selfLink: string;
+     name: string;
+     port: int; 
+     containerPort: string;
+     labels : selector; 
+     selector: selector 
+}
 
 type resourceTy = 
     [ Pod of pod
