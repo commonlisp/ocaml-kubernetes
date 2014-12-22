@@ -79,7 +79,7 @@ type service = {
 
 type resourceTy = 
     [ Pod of pod
-    | ReplicationController 
-    | Service ]
+    | ReplicationController of replicationController
+    | Service of service ]
 
 type resource = [ Resource of (id * metadata * resourceTy) ]
